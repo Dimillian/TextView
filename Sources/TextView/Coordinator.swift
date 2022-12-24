@@ -71,7 +71,6 @@ extension TextView.Representable.Coordinator {
         textView.attributedText = representable.text
         textView.font = representable.font
         textView.adjustsFontForContentSizeCategory = true
-        textView.textColor = representable.foregroundColor
         textView.autocapitalizationType = representable.autocapitalization
         textView.autocorrectionType = representable.autocorrection
         textView.isEditable = representable.isEditable
