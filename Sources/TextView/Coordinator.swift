@@ -8,6 +8,8 @@ extension TextView.Representable {
         private var originalText: NSAttributedString = .init()
         private var text: Binding<NSAttributedString>
         private var calculatedHeight: Binding<CGFloat>
+      
+        var didBecomeFirstResponder = false
 
         var onCommit: (() -> Void)?
         var onEditingChanged: (() -> Void)?

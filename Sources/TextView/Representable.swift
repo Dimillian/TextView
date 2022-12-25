@@ -31,6 +31,10 @@ extension TextView {
 
         func updateUIView(_ view: UIKitTextView, context: Context) {
             context.coordinator.update(representable: self)
+            if !context.coordinator.didBecomeFirstResponder {
+              context.coordinator.textView.becomeFirstResponder()
+              context.coordinator.didBecomeFirstResponder = true
+            }
         }
 
         @discardableResult func makeCoordinator() -> Coordinator {
