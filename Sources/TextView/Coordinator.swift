@@ -40,9 +40,11 @@ extension TextView.Representable {
         }
 
         func textViewDidChange(_ textView: UITextView) {
-            text.wrappedValue = NSAttributedString(attributedString: textView.attributedText)
-            recalculateHeight()
-            onEditingChanged?()
+            DispatchQueue.main.async {
+              self.text.wrappedValue = NSAttributedString(attributedString: textView.attributedText)
+              self.recalculateHeight()
+              self.onEditingChanged?()
+            }
         }
 
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -70,7 +72,9 @@ extension TextView.Representable {
 extension TextView.Representable.Coordinator {
 
     func update(representable: TextView.Representable) {
+        let selectedRange = textView.selectedRange
         textView.attributedText = representable.text
+        textView.selectedRange = selectedRange
         textView.font = representable.font
         textView.adjustsFontForContentSizeCategory = true
         textView.autocapitalizationType = representable.autocapitalization
