@@ -4,6 +4,7 @@ extension TextView {
     struct Representable: UIViewRepresentable {
 
         @Binding var text: NSMutableAttributedString
+        @Binding var selectedRange: NSRange
         @Binding var calculatedHeight: CGFloat
 
         let foregroundColor: UIColor
@@ -40,6 +41,7 @@ extension TextView {
         @discardableResult func makeCoordinator() -> Coordinator {
             Coordinator(
                 text: $text,
+                selectedRange: $selectedRange,
                 calculatedHeight: $calculatedHeight,
                 shouldEditInRange: shouldEditInRange,
                 onEditingChanged: onEditingChanged,

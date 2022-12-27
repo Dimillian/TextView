@@ -7,6 +7,7 @@ extension TextView.Representable {
 
         private var originalText: NSMutableAttributedString = .init()
         private var text: Binding<NSMutableAttributedString>
+        private var selectedRange: Binding<NSRange>
         private var calculatedHeight: Binding<CGFloat>
       
         var didBecomeFirstResponder = false
@@ -16,6 +17,7 @@ extension TextView.Representable {
         var shouldEditInRange: ((Range<String.Index>, String) -> Bool)?
 
         init(text: Binding<NSMutableAttributedString>,
+             selectedRange: Binding<NSRange>,
              calculatedHeight: Binding<CGFloat>,
              shouldEditInRange: ((Range<String.Index>, String) -> Bool)?,
              onEditingChanged: (() -> Void)?,
@@ -26,6 +28,7 @@ extension TextView.Representable {
             textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
             self.text = text
+            self.selectedRange = selectedRange
             self.calculatedHeight = calculatedHeight
             self.shouldEditInRange = shouldEditInRange
             self.onEditingChanged = onEditingChanged
@@ -33,6 +36,12 @@ extension TextView.Representable {
 
             super.init()
             textView.delegate = self
+        }
+      
+        func textViewDidChangeSelection(_ textView: UITextView) {
+          DispatchQueue.main.async {
+            self.selectedRange.wrappedValue = textView.selectedRange
+          }
         }
 
         func textViewDidBeginEditing(_ textView: UITextView) {
@@ -72,9 +81,8 @@ extension TextView.Representable {
 extension TextView.Representable.Coordinator {
 
     func update(representable: TextView.Representable) {
-        let selectedRange = textView.selectedRange
         textView.attributedText = representable.text
-        textView.selectedRange = selectedRange
+        textView.selectedRange = representable.selectedRange
         textView.font = representable.font
         textView.adjustsFontForContentSizeCategory = true
         textView.autocapitalizationType = representable.autocapitalization

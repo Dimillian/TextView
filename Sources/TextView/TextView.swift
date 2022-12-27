@@ -6,6 +6,7 @@ public struct TextView: View {
     @Environment(\.layoutDirection) private var layoutDirection
 
     @Binding private var text: NSMutableAttributedString
+    @Binding private var selectedRange: NSRange
     @Binding private var isEmpty: Bool
 
     @State private var calculatedHeight: CGFloat = 44
@@ -37,6 +38,7 @@ public struct TextView: View {
     ///   - onEditingChanged: A closure that's called after an edit has been applied
     ///   - onCommit: If this is provided, the field will automatically lose focus when the return key is pressed
     public init(_ text: Binding<String>,
+                _ selectedRange: Binding<NSRange>,
          shouldEditInRange: ((Range<String.Index>, String) -> Bool)? = nil,
          onEditingChanged: (() -> Void)? = nil,
          onCommit: (() -> Void)? = nil
@@ -45,6 +47,8 @@ public struct TextView: View {
             get: { NSMutableAttributedString(string: text.wrappedValue) },
             set: { text.wrappedValue = $0.string }
         )
+      
+        _selectedRange = selectedRange
 
         _isEmpty = Binding(
             get: { text.wrappedValue.isEmpty },
@@ -64,10 +68,12 @@ public struct TextView: View {
     ///   - onEditingChanged: A closure that's called after an edit has been applied
     ///   - onCommit: If this is provided, the field will automatically lose focus when the return key is pressed
     public init(_ text: Binding<NSMutableAttributedString>,
+                _ selectedRange: Binding<NSRange>,
                 onEditingChanged: (() -> Void)? = nil,
                 onCommit: (() -> Void)? = nil
     ) {
         _text = text
+        _selectedRange = selectedRange
         _isEmpty = Binding(
             get: { text.wrappedValue.string.isEmpty },
             set: { _ in }
@@ -82,6 +88,7 @@ public struct TextView: View {
     public var body: some View {
         Representable(
             text: $text,
+            selectedRange: $selectedRange,
             calculatedHeight: $calculatedHeight,
             foregroundColor: foregroundColor,
             autocapitalization: autocapitalization,
@@ -131,45 +138,4 @@ final class UIKitTextView: UITextView {
         resignFirstResponder()
     }
 
-}
-
-struct RoundedTextView: View {
-    @State private var text: NSMutableAttributedString = .init()
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            TextView($text)
-                .padding(.leading, 25)
-
-            GeometryReader { _ in
-                TextView($text)
-                    .placeholder("Enter some text")
-                    .padding(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1)
-                            .foregroundColor(Color(.placeholderText))
-                    )
-                    .padding()
-            }
-            .background(Color(.systemBackground).edgesIgnoringSafeArea(.all))
-
-            Button {
-                text = NSMutableAttributedString(string: "This is interesting", attributes: [
-                    .font: UIFont.preferredFont(forTextStyle: .headline)
-                ])
-            } label: {
-                Spacer()
-                Text("Interesting?")
-                Spacer()
-            }
-            .padding()
-        }
-    }
-}
-
-struct TextView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoundedTextView()
-    }
 }
