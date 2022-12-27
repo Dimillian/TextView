@@ -5,7 +5,7 @@ public struct TextView: View {
 
     @Environment(\.layoutDirection) private var layoutDirection
 
-    @Binding private var text: NSAttributedString
+    @Binding private var text: NSMutableAttributedString
     @Binding private var isEmpty: Bool
 
     @State private var calculatedHeight: CGFloat = 44
@@ -42,7 +42,7 @@ public struct TextView: View {
          onCommit: (() -> Void)? = nil
     ) {
         _text = Binding(
-            get: { NSAttributedString(string: text.wrappedValue) },
+            get: { NSMutableAttributedString(string: text.wrappedValue) },
             set: { text.wrappedValue = $0.string }
         )
 
@@ -63,7 +63,7 @@ public struct TextView: View {
     ///   - text: A binding to the attributed text
     ///   - onEditingChanged: A closure that's called after an edit has been applied
     ///   - onCommit: If this is provided, the field will automatically lose focus when the return key is pressed
-    public init(_ text: Binding<NSAttributedString>,
+    public init(_ text: Binding<NSMutableAttributedString>,
                 onEditingChanged: (() -> Void)? = nil,
                 onCommit: (() -> Void)? = nil
     ) {
@@ -134,7 +134,7 @@ final class UIKitTextView: UITextView {
 }
 
 struct RoundedTextView: View {
-    @State private var text: NSAttributedString = .init()
+    @State private var text: NSMutableAttributedString = .init()
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -155,7 +155,7 @@ struct RoundedTextView: View {
             .background(Color(.systemBackground).edgesIgnoringSafeArea(.all))
 
             Button {
-                text = NSAttributedString(string: "This is interesting", attributes: [
+                text = NSMutableAttributedString(string: "This is interesting", attributes: [
                     .font: UIFont.preferredFont(forTextStyle: .headline)
                 ])
             } label: {

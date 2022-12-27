@@ -3,7 +3,7 @@ import SwiftUI
 extension TextView {
     struct Representable: UIViewRepresentable {
 
-        @Binding var text: NSAttributedString
+        @Binding var text: NSMutableAttributedString
         @Binding var calculatedHeight: CGFloat
 
         let foregroundColor: UIColor

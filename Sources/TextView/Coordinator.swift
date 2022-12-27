@@ -5,8 +5,8 @@ extension TextView.Representable {
 
         internal let textView: UIKitTextView
 
-        private var originalText: NSAttributedString = .init()
-        private var text: Binding<NSAttributedString>
+        private var originalText: NSMutableAttributedString = .init()
+        private var text: Binding<NSMutableAttributedString>
         private var calculatedHeight: Binding<CGFloat>
       
         var didBecomeFirstResponder = false
@@ -15,7 +15,7 @@ extension TextView.Representable {
         var onEditingChanged: (() -> Void)?
         var shouldEditInRange: ((Range<String.Index>, String) -> Bool)?
 
-        init(text: Binding<NSAttributedString>,
+        init(text: Binding<NSMutableAttributedString>,
              calculatedHeight: Binding<CGFloat>,
              shouldEditInRange: ((Range<String.Index>, String) -> Bool)?,
              onEditingChanged: (() -> Void)?,
@@ -41,7 +41,7 @@ extension TextView.Representable {
 
         func textViewDidChange(_ textView: UITextView) {
             DispatchQueue.main.async {
-              self.text.wrappedValue = NSAttributedString(attributedString: textView.attributedText)
+              self.text.wrappedValue = NSMutableAttributedString(attributedString: textView.attributedText)
               self.recalculateHeight()
               self.onEditingChanged?()
             }
@@ -50,7 +50,7 @@ extension TextView.Representable {
         func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
             if onCommit != nil, text == "\n" {
                 onCommit?()
-                originalText = NSAttributedString(attributedString: textView.attributedText)
+                originalText = NSMutableAttributedString(attributedString: textView.attributedText)
                 textView.resignFirstResponder()
                 return false
             }
