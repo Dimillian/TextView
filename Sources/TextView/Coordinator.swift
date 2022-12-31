@@ -40,7 +40,9 @@ extension TextView.Representable {
       
         func textViewDidChangeSelection(_ textView: UITextView) {
           DispatchQueue.main.async {
-            self.selectedRange.wrappedValue = textView.selectedRange
+            if self.selectedRange.wrappedValue != textView.selectedRange {
+              self.selectedRange.wrappedValue = textView.selectedRange
+            }
           }
         }
 
