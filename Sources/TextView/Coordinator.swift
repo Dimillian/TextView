@@ -94,6 +94,7 @@ extension TextView.Representable.Coordinator {
         textView.isScrollEnabled = representable.isScrollingEnabled
         textView.dataDetectorTypes = representable.autoDetectionTypes
         textView.allowsEditingTextAttributes = representable.allowsRichText
+        textView.keyboardType = representable.keyboardType
 
         switch representable.multilineTextAlignment {
         case .leading:
