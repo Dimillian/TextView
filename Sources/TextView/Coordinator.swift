@@ -48,6 +48,9 @@ extension TextView.Representable {
 
         func textViewDidBeginEditing(_ textView: UITextView) {
             originalText = text.wrappedValue
+            DispatchQueue.main.async {
+              self.recalculateHeight()
+            }
         }
 
         func textViewDidChange(_ textView: UITextView) {
