@@ -26,7 +26,8 @@ extension TextView.Representable {
             textView = UIKitTextView()
             textView.backgroundColor = .clear
             textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
+            textView.keyboardType = .twitter
+          
             self.text = text
             self.selectedRange = selectedRange
             self.calculatedHeight = calculatedHeight
