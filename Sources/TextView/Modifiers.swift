@@ -69,6 +69,12 @@ public extension TextView {
         view.multilineTextAlignment = alignment
         return view
     }
+  
+    func setKeyboardType(_ keyboardType: UIKeyboardType) -> TextView {
+        var view = self
+        view.keyboard = keyboardType
+        return view
+    }
 
     /// Specifies the font to apply to the text
     /// - Parameter font: The font to apply

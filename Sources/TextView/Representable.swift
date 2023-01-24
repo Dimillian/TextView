@@ -17,6 +17,7 @@ extension TextView {
         let autocorrection: UITextAutocorrectionType
         let truncationMode: NSLineBreakMode
         let isEditable: Bool
+        let keyboard: UIKeyboardType
         let isSelectable: Bool
         let isScrollingEnabled: Bool
         let enablesReturnKeyAutomatically: Bool?

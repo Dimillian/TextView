@@ -25,6 +25,7 @@ public struct TextView: View {
     var clearsOnInsertion: Bool = false
     var autocorrection: UITextAutocorrectionType = .default
     var truncationMode: NSLineBreakMode = .byTruncatingTail
+    var keyboard: UIKeyboardType = .default
     var isEditable: Bool = true
     var isSelectable: Bool = true
     var isScrollingEnabled: Bool = false
@@ -105,6 +106,7 @@ public struct TextView: View {
             autocorrection: autocorrection,
             truncationMode: truncationMode,
             isEditable: isEditable,
+            keyboard: keyboard,
             isSelectable: isSelectable,
             isScrollingEnabled: isScrollingEnabled,
             enablesReturnKeyAutomatically: enablesReturnKeyAutomatically,

@@ -28,7 +28,6 @@ extension TextView.Representable {
             textView = UIKitTextView()
             textView.backgroundColor = .clear
             textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-            textView.keyboardType = .twitter
           
             self.text = text
             self.selectedRange = selectedRange
@@ -104,6 +103,7 @@ extension TextView.Representable.Coordinator {
         textView.isScrollEnabled = representable.isScrollingEnabled
         textView.dataDetectorTypes = representable.autoDetectionTypes
         textView.allowsEditingTextAttributes = representable.allowsRichText
+        textView.keyboardType = representable.keyboard
 
         switch representable.multilineTextAlignment {
         case .leading:
