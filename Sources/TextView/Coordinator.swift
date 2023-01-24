@@ -8,6 +8,7 @@ extension TextView.Representable {
         private var originalText: NSMutableAttributedString = .init()
         private var text: Binding<NSMutableAttributedString>
         private var selectedRange: Binding<NSRange>
+        private var markedTextRange: Binding<UITextRange?>
         private var calculatedHeight: Binding<CGFloat>
       
         var didBecomeFirstResponder = false
@@ -18,6 +19,7 @@ extension TextView.Representable {
 
         init(text: Binding<NSMutableAttributedString>,
              selectedRange: Binding<NSRange>,
+             markedTextRange: Binding<UITextRange?>,
              calculatedHeight: Binding<CGFloat>,
              shouldEditInRange: ((Range<String.Index>, String) -> Bool)?,
              onEditingChanged: (() -> Void)?,
@@ -30,6 +32,7 @@ extension TextView.Representable {
           
             self.text = text
             self.selectedRange = selectedRange
+            self.markedTextRange = markedTextRange
             self.calculatedHeight = calculatedHeight
             self.shouldEditInRange = shouldEditInRange
             self.onEditingChanged = onEditingChanged
@@ -43,6 +46,9 @@ extension TextView.Representable {
           DispatchQueue.main.async {
             if self.selectedRange.wrappedValue != textView.selectedRange {
               self.selectedRange.wrappedValue = textView.selectedRange
+            }
+            if self.markedTextRange.wrappedValue != textView.markedTextRange {
+              self.markedTextRange.wrappedValue = textView.markedTextRange
             }
           }
         }

@@ -5,6 +5,7 @@ extension TextView {
 
         @Binding var text: NSMutableAttributedString
         @Binding var selectedRange: NSRange
+        @Binding var markedTextRange: UITextRange?
         @Binding var calculatedHeight: CGFloat
 
         let foregroundColor: UIColor
@@ -42,6 +43,7 @@ extension TextView {
             Coordinator(
                 text: $text,
                 selectedRange: $selectedRange,
+                markedTextRange: $markedTextRange,
                 calculatedHeight: $calculatedHeight,
                 shouldEditInRange: shouldEditInRange,
                 onEditingChanged: onEditingChanged,
