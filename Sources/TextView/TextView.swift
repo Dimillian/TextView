@@ -7,6 +7,7 @@ public struct TextView: View {
 
     @Binding private var text: NSMutableAttributedString
     @Binding private var selectedRange: NSRange
+    @Binding private var markedTextRange: UITextRange?
     @Binding private var isEmpty: Bool
 
     @State private var calculatedHeight: CGFloat = 44
@@ -39,6 +40,7 @@ public struct TextView: View {
     ///   - onCommit: If this is provided, the field will automatically lose focus when the return key is pressed
     public init(_ text: Binding<String>,
                 _ selectedRange: Binding<NSRange>,
+                _ markedTextRange: Binding<UITextRange?>,
          shouldEditInRange: ((Range<String.Index>, String) -> Bool)? = nil,
          onEditingChanged: (() -> Void)? = nil,
          onCommit: (() -> Void)? = nil
@@ -49,6 +51,7 @@ public struct TextView: View {
         )
       
         _selectedRange = selectedRange
+        _markedTextRange = markedTextRange
 
         _isEmpty = Binding(
             get: { text.wrappedValue.isEmpty },
@@ -69,11 +72,13 @@ public struct TextView: View {
     ///   - onCommit: If this is provided, the field will automatically lose focus when the return key is pressed
     public init(_ text: Binding<NSMutableAttributedString>,
                 _ selectedRange: Binding<NSRange>,
+                _ markedTextRange: Binding<UITextRange?>,
                 onEditingChanged: (() -> Void)? = nil,
                 onCommit: (() -> Void)? = nil
     ) {
         _text = text
         _selectedRange = selectedRange
+        _markedTextRange = markedTextRange
         _isEmpty = Binding(
             get: { text.wrappedValue.string.isEmpty },
             set: { _ in }
@@ -89,6 +94,7 @@ public struct TextView: View {
         Representable(
             text: $text,
             selectedRange: $selectedRange,
+            markedTextRange: $markedTextRange,
             calculatedHeight: $calculatedHeight,
             foregroundColor: foregroundColor,
             autocapitalization: autocapitalization,
