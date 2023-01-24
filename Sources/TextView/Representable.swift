@@ -11,6 +11,7 @@ extension TextView {
         let autocapitalization: UITextAutocapitalizationType
         var multilineTextAlignment: TextAlignment
         let font: UIFont
+        var keyboardType: UIKeyboardType
         let returnKeyType: UIReturnKeyType?
         let clearsOnInsertion: Bool
         let autocorrection: UITextAutocorrectionType

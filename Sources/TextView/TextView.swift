@@ -20,6 +20,7 @@ public struct TextView: View {
     var autocapitalization: UITextAutocapitalizationType = .sentences
     var multilineTextAlignment: TextAlignment = .leading
     var font: UIFont = .preferredFont(forTextStyle: .body)
+    var keyboardType: UIKeyboardType = .default
     var returnKeyType: UIReturnKeyType?
     var clearsOnInsertion: Bool = false
     var autocorrection: UITextAutocorrectionType = .default
@@ -94,6 +95,7 @@ public struct TextView: View {
             autocapitalization: autocapitalization,
             multilineTextAlignment: multilineTextAlignment,
             font: font,
+            keyboardType: keyboardType,
             returnKeyType: returnKeyType,
             clearsOnInsertion: clearsOnInsertion,
             autocorrection: autocorrection,

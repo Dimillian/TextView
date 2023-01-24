@@ -158,4 +158,12 @@ public extension TextView {
         return view
     }
 
+    /// Specifies the keyboard to use
+    /// - Parameter keyboard: The keyboard type
+    func keyboardType(_ keyboard: UIKeyboardType) -> TextView {
+        var view = self
+        view.keyboardType = keyboard
+        return view
+    }
+    
 }
