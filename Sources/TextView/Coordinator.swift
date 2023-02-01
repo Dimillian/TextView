@@ -92,7 +92,9 @@ extension TextView.Representable {
 extension TextView.Representable.Coordinator {
 
     func update(representable: TextView.Representable) {
-        textView.attributedText = representable.text
+        if textView.markedTextRange == nil {
+            textView.attributedText = representable.text
+        }
         textView.selectedRange = representable.selectedRange
         textView.font = representable.font
         textView.adjustsFontForContentSizeCategory = true
